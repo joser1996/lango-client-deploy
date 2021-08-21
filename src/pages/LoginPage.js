@@ -4,7 +4,7 @@ const LoginPage = () => {
 
     const googleLogin = () => {
         console.log("Logging in")
-        window.open('https://lango-back-end.herokuapp.com/auth/google', '_self');
+        window.open(`${process.env.REACT_APP_HOST}/auth/google`, '_self');
     };
 
     return(

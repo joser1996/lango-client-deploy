@@ -1,13 +1,13 @@
 import React from 'react'
+import reactDom from 'react-dom';
 import styles from '../pages/HomePage.module.css'
 export default function SaveButton(props) {
-    const host = 'https://lango-back-end.herokuapp.com'
     const storeWords = () => {
         if(props.wordsProps != null) {
             console.log("Storing Words: ", props.wordsProps);
             const {english, japanese} = props.wordsProps;
             if (english && japanese) {
-                let url = `${host}/store/words?english=${english}&japanese=${japanese}`
+                let url = `${process.env.REACT_APP_HOST}/store/words?english=${english}&japanese=${japanese}`
                 fetch(url, {credentials: 'include'})
                     .then(res => res.json())
                     .then(data => {

@@ -2,10 +2,9 @@ import React, { createContext, useEffect, useState } from 'react'
 export const myContext = createContext({});
 
 export default function Context(props) {
-    const host = 'https://lango-back-end.herokuapp.com'
     const [userObject, setUserObject] = useState();
     useEffect(()=> {
-        fetch(`${host}/get/user`, { credentials: 'include' })
+        fetch(`${process.env.REACT_APP_HOST}/get/user`, { credentials: 'include' })
             .then(response => {
                 //console.log("Response: ", response)
                 return response.json()
