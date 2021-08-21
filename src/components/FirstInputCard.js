@@ -11,7 +11,7 @@ export default function FirstInputCard(props) {
         fetch(`${process.env.REACT_APP_HOST}/translate/word${api}`, {mode: 'cors'}) 
             .then(res => res.json())
             .then(data => {
-                console.log("Data: ")
+                console.log("translateRequest::Data:: ")
                 console.log(data)
                 props.updateWordsProps(data)
             })

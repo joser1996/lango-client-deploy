@@ -1,5 +1,4 @@
 import React from 'react'
-import reactDom from 'react-dom';
 import styles from '../pages/HomePage.module.css'
 export default function SaveButton(props) {
     const storeWords = () => {
@@ -11,7 +10,7 @@ export default function SaveButton(props) {
                 fetch(url, {credentials: 'include'})
                     .then(res => res.json())
                     .then(data => {
-                        if (data.status) {
+                        if (data.success) {
                             console.log("Clearing")
                             props.updateWordsProps({english: "", japanese: ""})
                         }

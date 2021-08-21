@@ -18,7 +18,12 @@ export default function Master() {
                 .then(res => res.json())
                 .then(data => {
                     console.log('Recieved:', data)
-                    setCards(data)
+                    if (!data.success) {
+                        console.log('Failed to get cards')
+                        setCards([]);
+                    } else {
+                        setCards(data.data);
+                    }
                 }).catch(err => console.error('Error: ', err));
         }
     }, [reviewing])
