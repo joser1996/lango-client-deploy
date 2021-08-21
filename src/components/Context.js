@@ -14,11 +14,11 @@ export default function Context(props) {
                 let user = data.user;
                 if (user) {
                     setUserObject(user)
-                } else {
-                    if (window.location.href !== 'http://localhost:3000/login') {
-                        window.location = '/login';
-                    }
-                }
+                }// else {
+                //     if (window.location.href !== 'http://localhost:3000/login') {
+                //         window.location = '/login';
+                //     }
+                // }
             })
             .catch(err => {
                 console.log("Got error instead");
