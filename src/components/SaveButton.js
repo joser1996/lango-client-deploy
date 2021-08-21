@@ -6,6 +6,7 @@ export default function SaveButton(props) {
             console.log("Storing Words: ", props.wordsProps);
             const {english, japanese} = props.wordsProps;
             if (english && japanese) {
+                console.log("Sending store request");
                 let url = `${process.env.REACT_APP_HOST}/store/words?english=${english}&japanese=${japanese}`
                 fetch(url, {credentials: 'include'})
                     .then(res => res.json())
