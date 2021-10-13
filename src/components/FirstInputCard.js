@@ -1,5 +1,6 @@
 import React from 'react'
 import styles from '../pages/HomePage.module.css'
+import evalBool from '../global';
 
 export default function FirstInputCard(props) {
 
@@ -8,7 +9,11 @@ export default function FirstInputCard(props) {
         const sourceLanguage = 'english';
         const api = `?${sourceLanguage}=${english}`
         //console.log("URL: ", api)
-        fetch(`${process.env.REACT_APP_HOST}/translate/word${api}`, {mode: 'cors'}) 
+        var endPoint = process.env.REACT_APP_HOST;
+        if (evalBool(process.env.REACT_APP_DEV_MODE)) {
+            endPoint = "http://localhost:4000"
+        }
+        fetch(`${endPoint}/translate/word${api}`, {mode: 'cors'}) 
             .then(res => res.json())
             .then(data => {
                 console.log("translateRequest::Data:: ")

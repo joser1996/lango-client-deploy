@@ -1,10 +1,17 @@
 import styles from "./LoginPage.module.css";
-
+import evalBool  from "../global.js"
 const LoginPage = () => {
 
     const googleLogin = () => {
         console.log("Logging in")
-        window.open(`${process.env.REACT_APP_HOST}/auth/google`, '_self');
+        if (evalBool(process.env.REACT_APP_DEV_MODE)) {
+            console.log("Developer mode");
+            window.open(`http://localhost:4000/auth/google`, '_self');
+        } else {
+            console.log("Deployed Mode");
+            window.open(`${process.env.REACT_APP_HOST}/auth/google`, '_self');
+        }
+        
     };
 
     return(

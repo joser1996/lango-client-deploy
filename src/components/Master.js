@@ -4,7 +4,7 @@ import MainBody from './MainBody'
 import ReviewBody from './ReviewBody'
 import LangoFooter from './LangoFooter'
 import Styles from '../pages/HomePage.module.css'
-
+import evalBool from '../global'
 
 export default function Master() {
     const [reviewing, setReviewing] = useState(false);
@@ -14,7 +14,11 @@ export default function Master() {
     useEffect(() => {
         if (reviewing) {
             console.log("Getting Flash cards")
-            fetch(`${process.env.REACT_APP_HOST}/get/cards`, {mode: 'cors', credentials: 'include'})
+            var endPoint = process.env.REACT_APP_HOST;
+            if (evalBool(process.env.REACT_APP_DEV_MODE)) {
+                endPoint = "http://localhost:4000"
+            }
+            fetch(`${endPoint}/get/cards`, {mode: 'cors', credentials: 'include'})
                 .then(res => res.json())
                 .then(data => {
                     console.log('Recieved:', data)
