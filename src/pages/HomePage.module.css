@@ -181,7 +181,7 @@ footer {
 	margin-bottom: 15px;
 }
 
-#reviewInputCard{
+.reviewInputCard{
 	/* background-color: lightblue; */
 	width: 650px;
 	height: 75px;
@@ -193,6 +193,14 @@ footer {
 	border-style: solid;
 	border-width: 2px;
 	border-color: lightgrey;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+.blinking {
+    border-color: red;
 }
 
 #nextButtonDiv{
