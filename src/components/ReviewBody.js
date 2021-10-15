@@ -1,9 +1,15 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
+import ReactCardFlip from 'react-card-flip';
 import styles from '../pages/HomePage.module.css';
 
-export default class ReviewBody extends Component {
+export default function ReviewBody(props) {
 
-    checkAns = (e) => {
+    const [isFlipped, setIsFlipped] = useState(false);
+    const handleClick = () => {
+        setIsFlipped(!isFlipped);
+    };
+
+    const checkAns = (e) => {
         if (e.charCode === 13) {
             e.preventDefault();
             const wordOne = this.props.currentPair['word_one'];
@@ -20,34 +26,45 @@ export default class ReviewBody extends Component {
         }       
     };
 
-    nextCard = () => {
+    const nextCard = () => {
         console.log("Next card")
-        this.props.updateIndex();
+        props.updateIndex();
     };
 
-    onChange = (event) => {
-        this.props.updateAnswer(event.target.value);
+    const onChange = (event) => {
+        props.updateAnswer(event.target.value);
     };
 
-    render() {
-        return (
-            <main id={styles.langoMain}>
-                <div id={styles.reviewTextCard}>
-                    <p id="pReview">{this.props.currentPair? this.props.currentPair['word_two']: ""}</p>
+    
+    return (
+        <main id={styles.langoMain}>
+            {/* <div id={styles.reviewTextCard}>
+                <p id="pReview">{this.props.currentPair? this.props.currentPair['word_two']: ""}</p>
+            </div> */}
+
+            <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
+                <div className="location-front-item" id={styles.reviewTextCard} onClick={handleClick}>
+                    <p id="pReview">{props.currentPair ? props.currentPair['word_two'] : ""}</p>
                 </div>
 
-                <div id={styles.reviewInputCard}>
-                    <textarea 
-                        id="reviewTextArea" 
-                        value={this.props.answer}
-                        onKeyPress={this.checkAns}
-                        onChange={this.onChange}>
-                    </textarea>
+                <div className="location-back-item" id={styles.reviewTextCard} onClick={handleClick}>
+                    <p id="pReview">{props.currentPair ? props.currentPair['word_one'] : ""}</p>
                 </div>
-                <div id={styles.nextButtonDiv}>
-                    <button id={styles.nextButton} onClick={this.nextCard}>Next</button>             
-                </div>
-            </main>
-        )
-    }
+            </ReactCardFlip>   
+
+
+            <div id={styles.reviewInputCard}>
+                <textarea 
+                    id="reviewTextArea" 
+                    value={props.answer}
+                    onKeyPress={checkAns}
+                    onChange={onChange}>
+                </textarea>
+            </div>
+            <div id={styles.nextButtonDiv}>
+                <button id={styles.nextButton} onClick={nextCard}>Next</button>             
+            </div>
+        </main>
+    )
+    
 }
