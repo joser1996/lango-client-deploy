@@ -1,4 +1,5 @@
 import React from 'react'
+import evalBool from '../global';
 import styles from '../pages/HomePage.module.css'
 export default function SaveButton(props) {
     const storeWords = () => {
@@ -7,7 +8,11 @@ export default function SaveButton(props) {
             const {english, japanese} = props.wordsProps;
             if (english && japanese) {
                 console.log("Sending store request");
-                let url = `${process.env.REACT_APP_HOST}/store/words?english=${english}&japanese=${japanese}`
+                var endPoint = process.env.REACT_APP_HOST;
+                if (evalBool(process.env.REACT_APP_DEV_MODE)) {
+                    endPoint = "http://localhost:4000"
+                }
+                let url = `${endPoint}/store/words?english=${english}&japanese=${japanese}`
                 fetch(url, {credentials: 'include'})
                     .then(res => res.json())
                     .then(data => {
