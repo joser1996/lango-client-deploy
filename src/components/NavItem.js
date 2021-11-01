@@ -5,7 +5,13 @@ export default function NavItem(props) {
 
     return (
         <li className="nav-item">
-            <a href="#" className="icon-button" title={props.desc} onClick={() => setOpen(!open)}>
+            <a
+                href="#"
+                className="icon-button"
+                title={props.desc} 
+                onClick={props.drop ? () => setOpen(!open) : undefined}
+                onClick={!props.drop ? props.action : undefined}
+                >
                 {props.icon}
             </a>
 

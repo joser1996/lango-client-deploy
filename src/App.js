@@ -8,15 +8,21 @@ import evalBool from "./global";
 import NavBar from "./components/NavBar";
 import NavItem from "./components/NavItem";
 import DropDownMenu from "./components/DropDownMenu";
+import EditBody from "./components/EditBody";
 
 import { ReactComponent as BoltIcon } from "./icons/bolt.svg"
 import { ReactComponent as ArrowIcon } from "./icons/arrow.svg"
 import { ReactComponent as CaretIcon } from "./icons/caret.svg"
+import ReviewBody from "./components/ReviewBody";
 
 const App = () => {
 
     const [user, setUser] = useState({});
+    const [reviewing, setReviewing] = useState(false)
 
+    const updateReviewing = () => {
+        setReviewing(!reviewing)
+    };
 
     useEffect(() => {
         var endPoint = "";
@@ -50,13 +56,14 @@ const App = () => {
                     <Route path='/' exact>
                         <NavBar>
                             {/* Review Button */}
-                            <NavItem icon={<BoltIcon />} desc={"Start Reviewing"} />
-                            <NavItem icon={<ArrowIcon />} desc={"Logout"}/>
-                            <NavItem icon={<CaretIcon />} desc={"DropDown Menu"}>
+                            <NavItem icon={<BoltIcon />} desc={"Start Reviewing"} drop={false} action={updateReviewing}/>
+                            <NavItem icon={<ArrowIcon />} desc={"Logout"} drop={false}/>
+                            <NavItem icon={<CaretIcon />} desc={"DropDown Menu"} drop={true}>
                                 <DropDownMenu />
                             </NavItem>
                         </NavBar>
                         {/* {user ? <HomePage /> : <Redirect to="/login" />} */}
+                        {reviewing ? <ReviewBody /> : <EditBody />}
                     </Route>
                 </Switch>
             </BrowserRouter>
