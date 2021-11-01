@@ -13,6 +13,7 @@ import EditBody from "./components/EditBody";
 import { ReactComponent as BoltIcon } from "./icons/bolt.svg"
 import { ReactComponent as ArrowIcon } from "./icons/arrow.svg"
 import { ReactComponent as CaretIcon } from "./icons/caret.svg"
+import { ReactComponent as PlusIcon } from "./icons/plus.svg"
 import ReviewBody from "./components/ReviewBody";
 
 const App = () => {
@@ -56,7 +57,7 @@ const App = () => {
                     <Route path='/' exact>
                         <NavBar>
                             {/* Review Button */}
-                            <NavItem icon={<BoltIcon />} desc={"Start Reviewing"} drop={false} action={updateReviewing}/>
+                            <NavItem icon={reviewing ? <PlusIcon /> : <BoltIcon />} desc={"Start Reviewing"} drop={false} action={updateReviewing}/>
                             <NavItem icon={<ArrowIcon />} desc={"Logout"} drop={false}/>
                             <NavItem icon={<CaretIcon />} desc={"DropDown Menu"} drop={true}>
                                 <DropDownMenu />
