@@ -7,6 +7,8 @@ import "./index.css"
 import evalBool from "./global";
 import NavBar from "./components/NavBar";
 import NavItem from "./components/NavItem";
+import DropDownMenu from "./components/DropDownMenu";
+
 import { ReactComponent as BoltIcon } from "./icons/bolt.svg"
 import { ReactComponent as ArrowIcon } from "./icons/arrow.svg"
 import { ReactComponent as CaretIcon } from "./icons/caret.svg"
@@ -48,9 +50,11 @@ const App = () => {
                     <Route path='/' exact>
                         <NavBar>
                             {/* Review Button */}
-                            <NavItem icon={<BoltIcon />} />
-                            <NavItem icon={<ArrowIcon />} />
-                            <NavItem icon={<CaretIcon />} />
+                            <NavItem icon={<BoltIcon />} desc={"Start Reviewing"} />
+                            <NavItem icon={<ArrowIcon />} desc={"Logout"}/>
+                            <NavItem icon={<CaretIcon />} desc={"DropDown Menu"}>
+                                <DropDownMenu />
+                            </NavItem>
                         </NavBar>
                         {/* {user ? <HomePage /> : <Redirect to="/login" />} */}
                     </Route>
