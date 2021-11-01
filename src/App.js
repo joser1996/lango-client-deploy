@@ -3,8 +3,13 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage"
 import "./App.css"
+import "./index.css"
 import evalBool from "./global";
-
+import NavBar from "./components/NavBar";
+import NavItem from "./components/NavItem";
+import { ReactComponent as BoltIcon } from "./icons/bolt.svg"
+import { ReactComponent as ArrowIcon } from "./icons/arrow.svg"
+import { ReactComponent as CaretIcon } from "./icons/caret.svg"
 
 const App = () => {
 
@@ -39,10 +44,15 @@ const App = () => {
         <div className="app-container"> 
             <BrowserRouter>
                 <Switch>
-                    
                     <Route path='/login' exact component={LoginPage} />
                     <Route path='/' exact>
-                        {user ? <HomePage /> : <Redirect to="/login" />}
+                        <NavBar>
+                            {/* Review Button */}
+                            <NavItem icon={<BoltIcon />} />
+                            <NavItem icon={<ArrowIcon />} />
+                            <NavItem icon={<CaretIcon />} />
+                        </NavBar>
+                        {/* {user ? <HomePage /> : <Redirect to="/login" />} */}
                     </Route>
                 </Switch>
             </BrowserRouter>
