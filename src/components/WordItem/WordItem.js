@@ -5,6 +5,7 @@ import Styles from './WordItem.module.css'
 export default function WordItem(props) {
 
     const [editing, setEditing] = useState(false)
+    const {native, id, translated} = props.word;
 
     const handleEditing = () => {
         setEditing(true);
@@ -13,6 +14,7 @@ export default function WordItem(props) {
     const handleUpdateDown = (event) => {
         if (event.key === "Enter") {
             setEditing(false);
+            props.updateTranslated(native, id);
         }
     };
 
@@ -24,7 +26,6 @@ export default function WordItem(props) {
     } else {
         editMode.display = 'none';
     }
-    const {native, id, translated} = props.word;
     return (
         <li className={Styles.item}>
             <div style={viewMode} onDoubleClick={handleEditing} className={Styles.border}>

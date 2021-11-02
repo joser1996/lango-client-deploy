@@ -4,7 +4,7 @@ import InputWord from '../InputWord/InputWord';
 import WordList from '../WordList/WordList';
 import Styles from './EditBody.module.css';
 import { v4 as uuidv4 } from "uuid";
-
+import evalBool from '../../global';
 
 export default function EditBody() {
     //TODO: Handle language dynamically; handle as state
@@ -18,6 +18,52 @@ export default function EditBody() {
         }
         setWords([...words, newWord]);
     };
+
+    function translateWord(word) {
+        const sourceLanguage = 'english';
+        const api = `?${sourceLanguage}=${word}`
+        var endPoint = process.env.REACT_APP_HOST;
+        if (evalBool(process.env.REACT_APP_DEV_MODE)) {
+            endPoint = "http://localhost:4000"
+        }
+        var newWord = undefined;
+        fetch(`${endPoint}/translate/word${api}`, {mode: 'cors'})
+        .then(res => res.json())
+        .then(data => {
+            console.log("TranslateRequest::data::")
+            console.log(data)
+            newWord = data.japanese;
+            return newWord
+        })
+        .catch(err => console.error(err))
+        return newWord;
+    }
+
+    const updateTranslatedWord = (word, id) => {
+        const sourceLanguage = 'english';
+        const api = `?${sourceLanguage}=${word}`
+        var endPoint = process.env.REACT_APP_HOST;
+        if (evalBool(process.env.REACT_APP_DEV_MODE)) {
+            endPoint = "http://localhost:4000"
+        }
+        var newWord = undefined;
+        fetch(`${endPoint}/translate/word${api}`, {mode: 'cors'})
+        .then(res => res.json())
+        .then(data => {
+            console.log("TranslateRequest::data::")
+            console.log(data)
+            newWord = data.japanese;
+            setWords(
+                words.map(w => {
+                    if (w.id === id) {
+                        w.translated = newWord
+                    }
+                    return w;
+                })
+            )
+        })
+        .catch(err => console.error(err))
+    }
 
     const updateWord = (updatedWord, id) => {
         setWords(
@@ -42,7 +88,7 @@ export default function EditBody() {
         <div className={Styles.editBody}>
             <Header language={"Japanese"}/>
             <InputWord addWord={addBufferedWord}/>
-            <WordList words={words} updateWord={updateWord} deleteWord={deleteWord}/>
+            <WordList words={words} updateWord={updateWord} deleteWord={deleteWord} updateTranslated={updateTranslatedWord}/>
         </div>
     )
 }

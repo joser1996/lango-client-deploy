@@ -10,6 +10,7 @@ export default function WordList(props) {
                     key={word.id}
                     word={word}
                     updateWord={props.updateWord}
+                    updateTranslated={props.updateTranslated}
                     deleteWord={props.deleteWord}
                 />
             ))}
