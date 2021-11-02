@@ -7,7 +7,7 @@ import evalBool from "./global";
 import NavBar from "./components/NavBar";
 import NavItem from "./components/NavItem";
 import DropDownMenu from "./components/DropDownMenu";
-import EditBody from "./components/EditBody";
+import EditBody from "./components/EditBody/EditBody";
 
 import { ReactComponent as BoltIcon } from "./icons/bolt.svg"
 import { ReactComponent as ArrowIcon } from "./icons/arrow.svg"
