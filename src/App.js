@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
-import HomePage from "./pages/HomePage";
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import LoginPage from "./pages/LoginPage"
 import "./App.css"
 import "./index.css"
