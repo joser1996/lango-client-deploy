@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { FaPlusCircle } from 'react-icons/fa'
 import Styles from './InputWord.module.css'
-
+import evalBool from './../../global'
 export default function InputWord(props) {
     const [inputText, setInputText] = useState();
 
@@ -12,7 +12,21 @@ export default function InputWord(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (inputText.trim()) {
-            props.addWord(inputText);
+            //attempt to translate
+            const sourceLanguage = 'english';
+            const api = `?${sourceLanguage}=${inputText}`
+            var endPoint = process.env.REACT_APP_HOST;
+            if (evalBool(process.env.REACT_APP_DEV_MODE)) {
+                endPoint = "http://localhost:4000"
+            }
+            fetch(`${endPoint}/translate/word${api}`, {mode: 'cors'})
+                .then(res => res.json())
+                .then(data => {
+                    console.log("TranslateRequest::data::")
+                    console.log(data)
+                    props.addWord(inputText, data.japanese)
+                })
+                .catch(err => console.error(err))
             setInputText("")
         } else {
             alert("Please enter a word!")

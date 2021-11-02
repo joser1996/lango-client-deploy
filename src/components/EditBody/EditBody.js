@@ -10,11 +10,11 @@ export default function EditBody() {
     //TODO: Handle language dynamically; handle as state
     const [words, setWords] = useState([])
 
-    const addBufferedWord = (word) => {
+    const addBufferedWord = (word, translated) => {
         const newWord = {
             id: uuidv4(),
             native: word,
-            translated: "Big Chungus"
+            translated: translated
         }
         setWords([...words, newWord]);
     };
