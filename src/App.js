@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
 import LoginPage from "./pages/LoginPage"
 import "./App.css"
 import "./index.css"
@@ -18,6 +18,7 @@ import ReviewBody from "./components/ReviewBody";
 const App = () => {
 
     const [user, setUser] = useState({});
+    console.log("user",user)
     const [reviewing, setReviewing] = useState(false)
 
     const updateReviewing = () => {
@@ -34,7 +35,7 @@ const App = () => {
         }
         fetch(`${endPoint}/get/user`, { credentials: 'include' })
             .then(response => {
-                console.log("Response: ", response)
+                //console.log("Response: ", response)
                 return response.json()
             })
             .then(data => {
@@ -63,7 +64,8 @@ const App = () => {
                             </NavItem>
                         </NavBar>
                         {/* {user ? <HomePage /> : <Redirect to="/login" />} */}
-                        {reviewing ? <ReviewBody /> : <EditBody />}
+                        {user ? (reviewing ? <ReviewBody /> : <EditBody />) : <Redirect to="/login" /> }
+                        {/* {reviewing ? <ReviewBody /> : <EditBody />} */}
                     </Route>
                 </Switch>
             </BrowserRouter>
