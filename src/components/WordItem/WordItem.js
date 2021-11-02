@@ -24,9 +24,7 @@ export default function WordItem(props) {
     } else {
         editMode.display = 'none';
     }
-    const word = props.word.word;
-    const id = props.word.id;
-
+    const {native, id, translated} = props.word;
     return (
         <li className={Styles.item}>
             <div style={viewMode} onDoubleClick={handleEditing} className={Styles.border}>
@@ -35,13 +33,16 @@ export default function WordItem(props) {
                         style={{ color: "orangered", fontSize: "16px" }}
                     />
                 </button>
-                <span>{props.word.word}</span>
+                <div className={Styles.wordPair}> 
+                    <span>{native}</span>
+                    <span>{translated}</span>
+                </div>
             </div>
             <input 
                 type="text"
                 style={editMode}
                 className={Styles.textInput} 
-                value={word}
+                value={native}
                 onChange={e => {props.updateWord(e.target.value, id)}}
                 onKeyDown={handleUpdateDown}
             />

@@ -16,3 +16,4 @@ export default function WordList(props) {
         </ul>
     )
 }
+ 

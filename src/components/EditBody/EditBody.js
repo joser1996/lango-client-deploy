@@ -13,7 +13,8 @@ export default function EditBody() {
     const addBufferedWord = (word) => {
         const newWord = {
             id: uuidv4(),
-            word: word
+            native: word,
+            translated: "Big Chungus"
         }
         setWords([...words, newWord]);
     };
@@ -22,7 +23,7 @@ export default function EditBody() {
         setWords(
             words.map(word => {
                 if (word.id === id) {
-                    word.word = updatedWord;
+                    word.native = updatedWord;
                 }
                 return word;
             })
