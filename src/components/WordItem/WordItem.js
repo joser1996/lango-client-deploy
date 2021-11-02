@@ -29,7 +29,7 @@ export default function WordItem(props) {
 
     return (
         <li className={Styles.item}>
-            <div style={viewMode} onDoubleClick={handleEditing}>
+            <div style={viewMode} onDoubleClick={handleEditing} className={Styles.border}>
                 <button onClick={() => props.deleteWord(id)}>
                     <FaTrash 
                         style={{ color: "orangered", fontSize: "16px" }}
