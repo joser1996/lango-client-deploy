@@ -18,11 +18,30 @@ export default function EditBody() {
         setWords([...words, newWord]);
     };
 
+    const updateWord = (updatedWord, id) => {
+        setWords(
+            words.map(word => {
+                if (word.id === id) {
+                    word.word = updatedWord;
+                }
+                return word;
+            })
+        );
+    };
+
+    const deleteWord = (id) => {
+        setWords([
+            ...words.filter( word => {
+                return word.id !== id
+            })
+        ]);
+    };
+
     return (
         <div className={Styles.editBody}>
             <Header language={"Japanese"}/>
             <InputWord addWord={addBufferedWord}/>
-            <WordList words={words}/>
+            <WordList words={words} updateWord={updateWord} deleteWord={deleteWord}/>
         </div>
     )
 }

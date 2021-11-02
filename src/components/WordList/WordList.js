@@ -8,6 +8,8 @@ export default function WordList(props) {
                 <WordItem 
                     key={word.id}
                     word={word}
+                    updateWord={props.updateWord}
+                    deleteWord={props.deleteWord}
                 />
             ))}
         </ul>
