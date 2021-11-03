@@ -18,7 +18,7 @@ import ReviewBody from "./components/ReviewBody";
 const App = () => {
 
     const [user, setUser] = useState({});
-    const [reviewing, setReviewing] = useState(false)
+    const [reviewing, setReviewing] = useState(true)
 
     const updateReviewing = () => {
         setReviewing(!reviewing)

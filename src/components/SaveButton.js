@@ -2,6 +2,7 @@ import React from 'react'
 import evalBool from '../global';
 import styles from '../pages/HomePage.module.css'
 export default function SaveButton(props) {
+    
     const storeWords = () => {
         if(props.wordsProps != null) {
             console.log("Storing Words: ", props.wordsProps);

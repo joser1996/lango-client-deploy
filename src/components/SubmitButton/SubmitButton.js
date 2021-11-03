@@ -12,7 +12,7 @@ export default function SubmitButton(props) {
 
     return (
         <div className={styles.buttonContainer} style={visible}>
-            <button className={styles.submitButton}>
+            <button className={styles.submitButton} onClick={props.saveBuffer}>
                 <AiFillSave 
                     style={{color: "darkcyan", fontSize: "40px", marginTop: "2px"}}
                 />
