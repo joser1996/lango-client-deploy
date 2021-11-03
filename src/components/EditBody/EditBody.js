@@ -5,6 +5,8 @@ import WordList from '../WordList/WordList';
 import Styles from './EditBody.module.css';
 import { v4 as uuidv4 } from "uuid";
 import evalBool from '../../global';
+import SubmitButton from '../SubmitButton/SubmitButton';
+
 
 export default function EditBody() {
     //TODO: Handle language dynamically; handle as state
@@ -89,6 +91,7 @@ export default function EditBody() {
             <Header language={"Japanese"}/>
             <InputWord addWord={addBufferedWord}/>
             <WordList words={words} updateWord={updateWord} deleteWord={deleteWord} updateTranslated={updateTranslatedWord}/>
+            <SubmitButton visible={words.length}/>
         </div>
     )
 }

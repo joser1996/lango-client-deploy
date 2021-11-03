@@ -18,7 +18,6 @@ import ReviewBody from "./components/ReviewBody";
 const App = () => {
 
     const [user, setUser] = useState({});
-    console.log("user",user)
     const [reviewing, setReviewing] = useState(false)
 
     const updateReviewing = () => {
@@ -27,7 +26,7 @@ const App = () => {
 
     useEffect(() => {
         var endPoint = "";
-        console.log("Checking to see if user is logged in")
+        //console.log("Checking to see if user is logged in")
         if (evalBool(process.env.REACT_APP_DEV_MODE)) {
             endPoint = "http://localhost:4000"
         } else {
@@ -39,7 +38,7 @@ const App = () => {
                 return response.json()
             })
             .then(data => {
-                console.log("Got User: ", data);
+       //         console.log("Got User: ", data);
                 let u = data.user;
                 setUser(u);
             })
