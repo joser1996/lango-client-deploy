@@ -47,6 +47,24 @@ const App = () => {
                 console.error(err)});
     }, [])
 
+    const logout = () => {
+        console.log('Logging out');
+        var endPoint = "";
+        //console.log("Checking to see if user is logged in")
+        if (evalBool(process.env.REACT_APP_DEV_MODE)) {
+            endPoint = "http://localhost:4000"
+        } else {
+            endPoint = process.env.REACT_APP_HOST;
+        }
+        fetch(`${endPoint}/logout`, {credentials: 'include'})
+        .then(res => res.json())
+        .then(data => {
+            console.log("GOT", data);
+            let url = data.url;
+            window.location.assign(url);
+        })
+        .catch(err => console.error('ERR: ', err));
+    }
 
     return(
         <div className="app-container"> 
@@ -57,7 +75,7 @@ const App = () => {
                         <NavBar>
                             {/* Review Button */}
                             <NavItem icon={reviewing ? <PlusIcon /> : <BoltIcon />} desc={"Start Reviewing/Edit"} drop={false} action={updateReviewing}/>
-                            <NavItem icon={<ArrowIcon />} desc={"Logout"} drop={false}/>
+                            <NavItem icon={<ArrowIcon />} desc={"Logout"} drop={false} action={logout}/>
                             <NavItem icon={<CaretIcon />} desc={"DropDown Menu"} drop={true}>
                                 <DropDownMenu />
                             </NavItem>
