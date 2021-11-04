@@ -8,6 +8,8 @@ export default function ReviewBody(props) {
 
     const [isFlipped, setIsFlipped] = useState(false);
     const [isBlinking, setIsBlinking] = useState(false);
+    const [isCorrect, setIsCorrect] = useState(false);
+
     const [cards, setCards] = useState([]);
     const [cardIndex, setCardIndex] = useState(0)
     const [answer, setAnswer] = useState("");
@@ -58,8 +60,12 @@ export default function ReviewBody(props) {
             if (wordOne.toLowerCase() === answer.toLowerCase()) {
                 //correct
                 console.log('Correct')
-                nextCard();
-                setAnswer("");
+                setIsCorrect(true);
+                setTimeout(() => {
+                    setIsCorrect(false);
+                    setAnswer("");
+                    nextCard();
+                }, 1000);
             } else {
                 //Incorrect
                 console.log('Incorrect')
@@ -79,11 +85,11 @@ export default function ReviewBody(props) {
         <main id={styles.langoMain}>
 
             <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
-                <div className="location-front-item" id={styles.reviewTextCard} onClick={handleClick}>
+                <div className={`${styles.reviewTextCard} location-front-item ${isCorrect ? styles.correct : ""}` } onClick={handleClick}>
                     <p id="pReview">{cards[cardIndex] ? cards[cardIndex].word_two : ""}</p>
                 </div>
 
-                <div className="location-back-item" id={styles.reviewTextCard} onClick={handleClick}>
+                <div className={`${styles.reviewTextCard} location-back-item ${isCorrect ? styles.correct : ""}`} onClick={handleClick}>
                     <p id="pReview">{cards[cardIndex] ? cards[cardIndex].word_one : ""}</p>
                 </div>
             </ReactCardFlip>   
