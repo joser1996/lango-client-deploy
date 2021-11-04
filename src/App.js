@@ -4,9 +4,9 @@ import LoginPage from "./pages/LoginPage"
 import "./App.css"
 import "./index.css"
 import evalBool from "./global";
-import NavBar from "./components/NavBar";
-import NavItem from "./components/NavItem";
-import DropDownMenu from "./components/DropDownMenu";
+import NavBar from "./components/NavMenu/NavBar";
+import NavItem from "./components/NavMenu/NavItem";
+import DropDownMenu from "./components/NavMenu/DropDownMenu";
 import EditBody from "./components/EditBody/EditBody";
 
 import { ReactComponent as BoltIcon } from "./icons/bolt.svg"
@@ -56,7 +56,7 @@ const App = () => {
                     <Route path='/' exact>
                         <NavBar>
                             {/* Review Button */}
-                            <NavItem icon={reviewing ? <PlusIcon /> : <BoltIcon />} desc={"Start Reviewing"} drop={false} action={updateReviewing}/>
+                            <NavItem icon={reviewing ? <PlusIcon /> : <BoltIcon />} desc={"Start Reviewing/Edit"} drop={false} action={updateReviewing}/>
                             <NavItem icon={<ArrowIcon />} desc={"Logout"} drop={false}/>
                             <NavItem icon={<CaretIcon />} desc={"DropDown Menu"} drop={true}>
                                 <DropDownMenu />

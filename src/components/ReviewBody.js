@@ -11,7 +11,7 @@ export default function ReviewBody(props) {
     const [cards, setCards] = useState([]);
     const [cardIndex, setCardIndex] = useState(0)
     const [answer, setAnswer] = useState("");
-
+ 
     const nextCard = () => {
         console.log("Next card")
         let tempIndex = cardIndex + 1;
@@ -20,8 +20,8 @@ export default function ReviewBody(props) {
         } else {
             setCardIndex(tempIndex);
         }
-    };
-
+    }; 
+   
 
     useEffect(() => {
         var endPoint = process.env.REACT_APP_HOST;

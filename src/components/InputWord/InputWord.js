@@ -3,7 +3,7 @@ import { FaPlusCircle } from 'react-icons/fa'
 import Styles from './InputWord.module.css'
 import evalBool from './../../global'
 export default function InputWord(props) {
-    const [inputText, setInputText] = useState();
+    const [inputText, setInputText] = useState("");
 
     const onChange = (e) => {
         setInputText(e.target.value);
