@@ -11,7 +11,8 @@ export default function ReviewBody(props) {
     const [isCorrect, setIsCorrect] = useState(false);
 
     const [cards, setCards] = useState([]);
-    const [cardIndex, setCardIndex] = useState(0)
+    const [cardIndex, setCardIndex] = useState(0);
+
     const [answer, setAnswer] = useState("");
  
     const nextCard = () => {
@@ -22,6 +23,7 @@ export default function ReviewBody(props) {
         } else {
             setCardIndex(tempIndex);
         }
+        
     }; 
    
 
@@ -36,6 +38,9 @@ export default function ReviewBody(props) {
             .then(data => {
                 let cards = data.data;
                 console.log("Got cards: ", cards);
+                for (let i = 0; i < cards.length; i++) {
+                    cards[i].correct = false;
+                }
                 setCards(cards);
             })
             .catch(err => console.error("ERR: ", err));

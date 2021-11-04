@@ -19,6 +19,7 @@ const App = () => {
 
     const [user, setUser] = useState({});
     const [reviewing, setReviewing] = useState(true)
+    const [deckName, setDeckName] = useState('First')
 
     const updateReviewing = () => {
         setReviewing(!reviewing)
@@ -72,7 +73,7 @@ const App = () => {
                 <Switch>
                     <Route path='/login' exact component={LoginPage} />
                     <Route path='/' exact>
-                        <NavBar>
+                        <NavBar deck={deckName}>
                             {/* Review Button */}
                             <NavItem icon={reviewing ? <PlusIcon /> : <BoltIcon />} desc={"Start Reviewing/Edit"} drop={false} action={updateReviewing}/>
                             <NavItem icon={<ArrowIcon />} desc={"Logout"} drop={false} action={logout}/>
