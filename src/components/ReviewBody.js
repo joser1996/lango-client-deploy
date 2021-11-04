@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import ReactCardFlip from 'react-card-flip';
+import evalBool from '../global';
 import styles from '../pages/HomePage.module.css';
 import BlinkingInput from './BlinkingInput';
 
@@ -7,7 +8,25 @@ export default function ReviewBody(props) {
 
     const [isFlipped, setIsFlipped] = useState(false);
     const [isBlinking, setIsBlinking] = useState(false);
-    
+    const [cards, setCards] = useState([]);
+    const [cardIndex, setCardIndex] = useState(0)
+
+    useEffect(() => {
+        var endPoint = process.env.REACT_APP_HOST;
+        if (evalBool(process.env.REACT_APP_DEV_MODE)) {
+            endPoint = "http://localhost:4000"
+        }
+        let url = `${endPoint}/get/cards`
+        fetch(url, {credentials: 'include'})
+            .then(res => res.json())
+            .then(data => {
+                let cards = data.data;
+                console.log("Got cards: ", cards);
+                setCards(cards);
+            })
+            .catch(err => console.error("ERR: ", err));
+    }, [])
+
     const handleBlinking = ()=> {
         setIsBlinking(true);
         setTimeout(() => {
@@ -23,7 +42,7 @@ export default function ReviewBody(props) {
     const checkAns = (e) => {
         if (e.charCode === 13) {
             e.preventDefault();
-            const wordOne = props.currentPair['word_one'];
+            const wordOne = cards[cardIndex].word_one
             const answer = props.answer;
             if (wordOne.toLowerCase() === answer.toLowerCase()) {
                 //correct
@@ -40,7 +59,12 @@ export default function ReviewBody(props) {
 
     const nextCard = () => {
         console.log("Next card")
-        props.updateIndex();
+        let tempIndex = cardIndex + 1;
+        if (tempIndex >= cards.length) {
+            setCardIndex(0);
+        } else {
+            setCardIndex(tempIndex);
+        }
     };
 
     const onChange = (event) => {
@@ -53,11 +77,11 @@ export default function ReviewBody(props) {
 
             <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
                 <div className="location-front-item" id={styles.reviewTextCard} onClick={handleClick}>
-                    <p id="pReview">{props.currentPair ? props.currentPair['word_two'] : ""}</p>
+                    <p id="pReview">{cards[cardIndex] ? cards[cardIndex].word_two : ""}</p>
                 </div>
 
                 <div className="location-back-item" id={styles.reviewTextCard} onClick={handleClick}>
-                    <p id="pReview">{props.currentPair ? props.currentPair['word_one'] : ""}</p>
+                    <p id="pReview">{cards[cardIndex] ? cards[cardIndex].word_one : ""}</p>
                 </div>
             </ReactCardFlip>   
 

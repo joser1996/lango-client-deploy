@@ -62,9 +62,7 @@ const App = () => {
                                 <DropDownMenu />
                             </NavItem>
                         </NavBar>
-                        {/* {user ? <HomePage /> : <Redirect to="/login" />} */}
                         {user ? (reviewing ? <ReviewBody /> : <EditBody />) : <Redirect to="/login" /> }
-                        {/* {reviewing ? <ReviewBody /> : <EditBody />} */}
                     </Route>
                 </Switch>
             </BrowserRouter>

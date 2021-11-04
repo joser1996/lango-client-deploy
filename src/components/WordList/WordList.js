@@ -18,22 +18,3 @@ export default function WordList(props) {
     )
 }
  
-        // //get cards from database
-        // let endPoint = process.env.REACT_APP_HOST;
-        // if (evalBool(process.env.REACT_APP_DEV_MODE)) {
-        //     endPoint = "http://localhost:4000"
-        // }
-        // let url = `${endPoint}/get/cards`
-        // let response = await fetch(url, {credentials: 'include'})
-        // let data = await response.json();
-        // console.log(data, 'here');
-        // let cards = data.data;
-        // let temp = []
-        // for (const card of cards) {
-        //     let newCard = {
-        //         id: card._id,
-        //         native: card.word_one,
-        //         translated: card.word_two
-        //     }
-        //     temp.push(newCard);
-        // }
