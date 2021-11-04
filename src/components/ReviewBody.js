@@ -10,6 +10,18 @@ export default function ReviewBody(props) {
     const [isBlinking, setIsBlinking] = useState(false);
     const [cards, setCards] = useState([]);
     const [cardIndex, setCardIndex] = useState(0)
+    const [answer, setAnswer] = useState("");
+
+    const nextCard = () => {
+        console.log("Next card")
+        let tempIndex = cardIndex + 1;
+        if (tempIndex >= cards.length) {
+            setCardIndex(0);
+        } else {
+            setCardIndex(tempIndex);
+        }
+    };
+
 
     useEffect(() => {
         var endPoint = process.env.REACT_APP_HOST;
@@ -43,12 +55,11 @@ export default function ReviewBody(props) {
         if (e.charCode === 13) {
             e.preventDefault();
             const wordOne = cards[cardIndex].word_one
-            const answer = props.answer;
             if (wordOne.toLowerCase() === answer.toLowerCase()) {
                 //correct
                 console.log('Correct')
-                props.updateIndex();
-                props.updateAnswer("");
+                nextCard();
+                setAnswer("");
             } else {
                 //Incorrect
                 console.log('Incorrect')
@@ -57,18 +68,10 @@ export default function ReviewBody(props) {
         }       
     };
 
-    const nextCard = () => {
-        console.log("Next card")
-        let tempIndex = cardIndex + 1;
-        if (tempIndex >= cards.length) {
-            setCardIndex(0);
-        } else {
-            setCardIndex(tempIndex);
-        }
-    };
 
     const onChange = (event) => {
-        props.updateAnswer(event.target.value);
+        let ans = event.target.value;
+        setAnswer(ans);
     };
 
     
@@ -86,7 +89,7 @@ export default function ReviewBody(props) {
             </ReactCardFlip>   
 
 
-            <BlinkingInput blinking={isBlinking} answer={props.answer} checkAns={checkAns} onChange={onChange}/>
+            <BlinkingInput blinking={isBlinking} answer={answer} checkAns={checkAns} onChange={onChange}/>
 
             <div id={styles.nextButtonDiv}>
                 <button id={styles.nextButton} onClick={nextCard}>Next</button>             
