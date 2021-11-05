@@ -124,10 +124,12 @@ export default function EditBody(props) {
 
     }
 
+
+
     return (
         <div className={Styles.editBody}>
             <Header language={props.language}/>
-            <InputWord addWord={addBufferedWord}/>
+            <InputWord addWord={addBufferedWord} code={props.code}/>
             <WordList words={words} updateWord={updateWord} deleteWord={deleteWord} updateTranslated={updateTranslatedWord}/>
             <SubmitButton visible={words.length} saveBuffer={saveBuffer}/>
         </div>

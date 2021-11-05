@@ -4,6 +4,7 @@ import Styles from './InputWord.module.css'
 import evalBool from './../../global'
 export default function InputWord(props) {
     const [inputText, setInputText] = useState("");
+    const langCode = props.code || 'en';
 
     const onChange = (e) => {
         setInputText(e.target.value);
@@ -14,7 +15,7 @@ export default function InputWord(props) {
         if (inputText.trim()) {
             //attempt to translate
             const sourceLanguage = 'english';
-            const api = `?${sourceLanguage}=${inputText}`
+            const api = `?${sourceLanguage}=${inputText}&code=${langCode}`
             var endPoint = process.env.REACT_APP_HOST;
             if (evalBool(process.env.REACT_APP_DEV_MODE)) {
                 endPoint = "http://localhost:4000"
