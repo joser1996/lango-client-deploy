@@ -8,8 +8,7 @@ import evalBool from '../../global';
 import SubmitButton from '../SubmitButton/SubmitButton';
 
 
-export default function EditBody() {
-    //TODO: Handle language dynamically; handle as state
+export default function EditBody(props) {
     const [words, setWords] = useState(getSavedWords() || []);
 
     const addBufferedWord = (word, translated) => {
@@ -127,7 +126,7 @@ export default function EditBody() {
 
     return (
         <div className={Styles.editBody}>
-            <Header language={"Japanese"}/>
+            <Header language={props.language}/>
             <InputWord addWord={addBufferedWord}/>
             <WordList words={words} updateWord={updateWord} deleteWord={deleteWord} updateTranslated={updateTranslatedWord}/>
             <SubmitButton visible={words.length} saveBuffer={saveBuffer}/>

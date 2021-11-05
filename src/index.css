@@ -90,7 +90,7 @@ a {
 /* Dropdown menu */
 .dropdown {
     position: absolute;
-    top: 68px;
+    top: 64px;
     width: 300px;
     transform: translateX(-45%);
     background-color: var(--bg);

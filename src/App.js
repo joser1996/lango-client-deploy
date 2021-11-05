@@ -18,17 +18,26 @@ import ReviewBody from "./components/ReviewBody";
 const App = () => {
 
     const [user, setUser] = useState({});
-    const [reviewing, setReviewing] = useState(true)
+    const [reviewing, setReviewing] = useState(false)
     const [deckName, setDeckName] = useState('First')
-    
+    const [language, setLanguage] = useState(null);
+    const [langCode, setLangCode] = useState('ja')
 
-    //Japanese
-    //Spanish
-    //Korean
-    //Chinese(mandarin)
-    //Italian
-    //French
-    //German
+    const langTable = {
+        'ja': '日本語',
+        'ko': '한국어',
+        'it': 'Italiano',
+        'fr': 'Français',
+        'es': 'Español',
+        'de': 'Deutsch',
+        'ar': 'العربية'
+    }
+
+    useEffect(() => {
+        let l = langTable[langCode];
+        setLanguage(l);
+    }, [langCode])
+
     const updateReviewing = () => {
         setReviewing(!reviewing)
     };
@@ -75,6 +84,11 @@ const App = () => {
         .catch(err => console.error('ERR: ', err));
     }
 
+    const updateLanguage = (lang) => {
+        console.log("Updating to: ", lang);
+        setLangCode(lang);
+    };
+
     return(
         <div className="app-container"> 
             <BrowserRouter>
@@ -86,10 +100,10 @@ const App = () => {
                             <NavItem icon={reviewing ? <PlusIcon /> : <BoltIcon />} desc={"Start Reviewing/Edit"} drop={false} action={updateReviewing}/>
                             <NavItem icon={<ArrowIcon />} desc={"Logout"} drop={false} action={logout}/>
                             <NavItem icon={<CaretIcon />} desc={"DropDown Menu"} drop={true}>
-                                <DropDownMenu />
+                                <DropDownMenu updateLanguage={updateLanguage}/>
                             </NavItem>
                         </NavBar>
-                        {user ? (reviewing ? <ReviewBody /> : <EditBody />) : <Redirect to="/login" /> }
+                        {user ? (reviewing ? <ReviewBody /> : <EditBody language={language}/>) : <Redirect to="/login" /> }
                     </Route>
                 </Switch>
             </BrowserRouter>
