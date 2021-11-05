@@ -20,7 +20,15 @@ const App = () => {
     const [user, setUser] = useState({});
     const [reviewing, setReviewing] = useState(true)
     const [deckName, setDeckName] = useState('First')
+    
 
+    //Japanese
+    //Spanish
+    //Korean
+    //Chinese(mandarin)
+    //Italian
+    //French
+    //German
     const updateReviewing = () => {
         setReviewing(!reviewing)
     };
