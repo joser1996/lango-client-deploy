@@ -5,6 +5,7 @@ import styles from './SubmitButton.module.css';
 export default function SubmitButton(props) {
 
     const numWords = props.visible;
+    
     var visible = {};
     if (numWords === 0) {
         visible.display = 'none'

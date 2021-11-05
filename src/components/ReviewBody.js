@@ -25,14 +25,14 @@ export default function ReviewBody(props) {
         }
         
     }; 
-   
+    const deckName = props.deck;
 
     useEffect(() => {
         var endPoint = process.env.REACT_APP_HOST;
         if (evalBool(process.env.REACT_APP_DEV_MODE)) {
             endPoint = "http://localhost:4000"
         }
-        let url = `${endPoint}/get/cards`
+        let url = `${endPoint}/get/cards?deck=${deckName}`
         fetch(url, {credentials: 'include'})
             .then(res => res.json())
             .then(data => {

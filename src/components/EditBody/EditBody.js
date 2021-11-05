@@ -10,6 +10,7 @@ import SubmitButton from '../SubmitButton/SubmitButton';
 
 export default function EditBody(props) {
     const [words, setWords] = useState(getSavedWords() || []);
+    const deckName = props.deck;
 
     const addBufferedWord = (word, translated) => {
         const newWord = {
@@ -99,7 +100,7 @@ export default function EditBody(props) {
             endPoint = process.env.REACT_APP_HOST;
         }
 
-        fetch(`${endPoint}/store/cards`, {
+        fetch(`${endPoint}/store/cards?deck=${deckName}`, {
             method: 'POST',
             mode: 'cors',
             credentials: 'include',
@@ -129,9 +130,9 @@ export default function EditBody(props) {
     return (
         <div className={Styles.editBody}>
             <Header language={props.language}/>
-            <InputWord addWord={addBufferedWord} code={props.code}/>
+            <InputWord addWord={addBufferedWord} code={props.code} />
             <WordList words={words} updateWord={updateWord} deleteWord={deleteWord} updateTranslated={updateTranslatedWord}/>
-            <SubmitButton visible={words.length} saveBuffer={saveBuffer}/>
+            <SubmitButton visible={words.length} saveBuffer={saveBuffer} />
         </div>
     )
 }

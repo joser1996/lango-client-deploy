@@ -103,7 +103,7 @@ const App = () => {
                                 <DropDownMenu updateLanguage={updateLanguage}/>
                             </NavItem>
                         </NavBar>
-                        {user ? (reviewing ? <ReviewBody /> : <EditBody language={language} code={langCode}/>) : <Redirect to="/login" /> }
+                        {user ? (reviewing ? <ReviewBody deck={deckName}/> : <EditBody language={language} code={langCode} deck={deckName}/>) : <Redirect to="/login" /> }
                     </Route>
                 </Switch>
             </BrowserRouter>
