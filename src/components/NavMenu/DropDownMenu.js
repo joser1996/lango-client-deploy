@@ -1,8 +1,11 @@
 import React, { useRef, useState, useEffect } from 'react'
+import { FaBalanceScale } from 'react-icons/fa';
 import { CSSTransition } from "react-transition-group";
 import evalBool from '../../global';
 import {ReactComponent as ArrowIcon} from '../../icons/arrow.svg'
 import {ReactComponent as PlusIcon} from '../../icons/plus.svg'
+import {ReactComponent as TrashIcon} from '../../icons/trash.svg'
+
 
 export default function DropDownMenu(props) {
     const [activeMenu, setactiveMenu] = useState('main');
@@ -12,7 +15,7 @@ export default function DropDownMenu(props) {
 
     useEffect(() => {
         setMenuHeight(dropdownRef.current?.firstChild.offsetHeight + 25)
-    }, [])
+    }, [decks])
 
     function calcHeight(el) {
         var height = el.offsetHeight;
@@ -40,7 +43,7 @@ export default function DropDownMenu(props) {
             <a href="#" className="menu-item" onClick={handleClick}>
                 {props.leftIcon ? <span className="icon-button">{props.leftIcon}</span> :undefined}
                 {props.children}
-                {props.rightIcon ? <span className="icon-right">{props.rightIcon}</span> : undefined}
+                {props.rightIcon ? <div className="icon-right">{props.rightIcon}</div> : undefined}
             </a>
         );
     }
@@ -112,6 +115,7 @@ export default function DropDownMenu(props) {
         );
     }
 
+
     return (
         <div className="dropdown" style={{height: menuHeight}} ref={dropdownRef}>
             <CSSTransition
@@ -165,7 +169,14 @@ export default function DropDownMenu(props) {
 
                     {/* Put decks from db here */}
                     {decks.map(deck => (
-                        <DropDownItem deckName={deck.deck_name} key={deck._id} action={props.updateDeck}><h2>{deck.deck_name}</h2></DropDownItem>
+                        <DropDownItem
+                            deckName={deck.deck_name} 
+                            key={deck._id} 
+                            action={props.updateDeck}
+                        >
+                            <h2>{deck.deck_name}</h2>
+
+                         </DropDownItem>
                     ))}
                     <DropDownItem leftIcon={<PlusIcon />}>
                         <InputItem>Create new Deck</InputItem>

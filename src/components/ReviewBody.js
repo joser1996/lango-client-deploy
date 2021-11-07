@@ -44,7 +44,7 @@ export default function ReviewBody(props) {
                 setCards(cards);
             })
             .catch(err => console.error("ERR: ", err));
-    }, [])
+    }, [deckName])
 
     const handleBlinking = ()=> {
         setIsBlinking(true);

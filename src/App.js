@@ -37,19 +37,13 @@ const App = () => {
         'ar': 'العربية'
     }
 
+    // Whenver langcode is updated; update language(human readable)
     useEffect(() => {
         let l = langTable[langCode];
         setLanguage(l);
     }, [langCode])
 
-    const updateReviewing = () => {
-        setReviewing(!reviewing)
-    };
-
-    const updateDeckName = (using) => {
-        setDeckName(using);
-    }
-
+    // Checking to see if user object exists; logged in
     useEffect(() => {
         var endPoint = "";
         //console.log("Checking to see if user is logged in")
@@ -72,6 +66,14 @@ const App = () => {
                 console.log("Got error instead");
                 console.error(err)});
     }, [])
+
+    const updateReviewing = () => {
+        setReviewing(!reviewing)
+    };
+
+    const updateDeckName = (using) => {
+        setDeckName(using);
+    }
 
     // Get Decks
     useEffect(() => {
