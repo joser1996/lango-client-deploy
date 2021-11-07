@@ -17,11 +17,15 @@ import ReviewBody from "./components/ReviewBody";
 
 const App = () => {
 
+    //Let user update deck that is active by clicking
+
     const [user, setUser] = useState({});
     const [reviewing, setReviewing] = useState(false)
     const [deckName, setDeckName] = useState('First')
-    const [language, setLanguage] = useState(null);
+    const [language, setLanguage] = useState(null)
     const [langCode, setLangCode] = useState('ja')
+    const [decks, setDecks] = useState([])
+
 
     const langTable = {
         'ja': '日本語',
@@ -41,6 +45,10 @@ const App = () => {
     const updateReviewing = () => {
         setReviewing(!reviewing)
     };
+
+    const updateDeckName = (using) => {
+        setDeckName(using);
+    }
 
     useEffect(() => {
         var endPoint = "";
@@ -64,6 +72,27 @@ const App = () => {
                 console.log("Got error instead");
                 console.error(err)});
     }, [])
+
+    // Get Decks
+    useEffect(() => {
+        var endPoint = process.env.REACT_APP_HOST;
+        //console.log("Checking to see if user is logged in")
+        if (evalBool(process.env.REACT_APP_DEV_MODE)) {
+            endPoint = "http://localhost:4000"
+        }
+        let url = endPoint + '/get/decks'
+        fetch(url, {credentials: 'include'})
+        .then(res => res.json())
+        .then(data => {
+            console.log("Got data: ", data);
+            if (data.success) {
+                let decks = data.data;
+                console.log(decks);
+                setDecks(decks);
+            }
+        })
+
+    }, [deckName])
 
     const logout = () => {
         console.log('Logging out');
@@ -100,7 +129,7 @@ const App = () => {
                             <NavItem icon={reviewing ? <PlusIcon /> : <BoltIcon />} desc={"Start Reviewing/Edit"} drop={false} action={updateReviewing}/>
                             <NavItem icon={<ArrowIcon />} desc={"Logout"} drop={false} action={logout}/>
                             <NavItem icon={<CaretIcon />} desc={"DropDown Menu"} drop={true}>
-                                <DropDownMenu updateLanguage={updateLanguage}/>
+                                <DropDownMenu updateLanguage={updateLanguage} decks={decks} updateDeck={updateDeckName}/>
                             </NavItem>
                         </NavBar>
                         {user ? (reviewing ? <ReviewBody deck={deckName}/> : <EditBody language={language} code={langCode} deck={deckName}/>) : <Redirect to="/login" /> }

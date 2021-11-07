@@ -1,11 +1,14 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { CSSTransition } from "react-transition-group";
+import evalBool from '../../global';
 import {ReactComponent as ArrowIcon} from '../../icons/arrow.svg'
+import {ReactComponent as PlusIcon} from '../../icons/plus.svg'
 
 export default function DropDownMenu(props) {
     const [activeMenu, setactiveMenu] = useState('main');
     const [menuHeight, setMenuHeight] = useState(null);
     const dropdownRef = useRef(null);
+    const decks = props.decks;
 
     useEffect(() => {
         setMenuHeight(dropdownRef.current?.firstChild.offsetHeight + 25)
@@ -26,6 +29,11 @@ export default function DropDownMenu(props) {
             if (props.action && props.code) {
                 props.action(props.code)
             }
+
+            if (props.action && props.deckName) {
+                console.log("This working")
+                props.action(props.deckName)
+            }
         }
 
         return(
@@ -34,6 +42,73 @@ export default function DropDownMenu(props) {
                 {props.children}
                 {props.rightIcon ? <span className="icon-right">{props.rightIcon}</span> : undefined}
             </a>
+        );
+    }
+
+    const updateDeck = props.updateDeck;
+
+    function InputItem(props) {
+        const [name, setName] = useState("");
+        const [editing, setEditing] = useState(false);
+
+        const handleKeyDown = (event) => {
+            if (event.key === 'Enter') {
+                if (name !== "") {
+                    //Attempt to save to database
+                    var endPoint = process.env.REACT_APP_HOST;
+                    if (evalBool(process.env.REACT_APP_DEV_MODE)) {
+                        endPoint = "http://localhost:4000"
+                    }
+                    let url = endPoint + '/create/deck' + `?deck=${name}`
+                    fetch(url, {credentials: 'include'})
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log("We got data: ", data);
+                        if (data.status) {
+                            let status = data.status;
+                            if (status === 'success') {
+                                updateDeck(name);
+                                alert('Deck created');
+                            } else if(status === 'duplicate') {
+                                alert('Deck already exists')
+                            } else if(status === 'fail') {
+                                alert('Something went wrong')
+                                console.error(data.error);
+                            } 
+                            setName("")
+                        }
+                    })
+                    .catch(err => console.error('ERR: ', err));
+                }
+                setEditing(false);
+            }
+        }
+
+        const handleEditing = () => {
+            setEditing(true);
+        }
+
+        let viewMode = {}
+        let editMode = {}
+
+        if (editing) {
+            viewMode.display = 'none';
+        } else {
+            editMode.display = 'none'
+        }
+        return(
+            <div className="input-item-container">
+                <h2 style={viewMode} onDoubleClick={handleEditing}>{props.children}</h2>
+                
+                <input 
+                    type="text"
+                    value={name}
+                    onChange={e => {setName(e.target.value)}}
+                    style={editMode}
+                    onKeyDown={handleKeyDown}
+                />
+            </div>
+ 
         );
     }
 
@@ -48,10 +123,10 @@ export default function DropDownMenu(props) {
             >
                 <div className="menu">
                     <DropDownItem goToMenu="language">Change Language</DropDownItem>
-                    <DropDownItem>Change Deck</DropDownItem>
+                    <DropDownItem goToMenu="decks">Change Deck</DropDownItem>
                 </div>
             </CSSTransition>
-
+ 
             <CSSTransition
                 in={activeMenu === "language"}
                 unmountOnExit
@@ -72,6 +147,32 @@ export default function DropDownMenu(props) {
                     <DropDownItem code={'ar'} action={props.updateLanguage}>العربية</DropDownItem>
                 </div>
             </CSSTransition>
+
+            <CSSTransition
+                in={activeMenu === "decks"}
+                unmountOnExit
+                timeout={500}
+                classNames="menu-secondary"
+                onEnter={calcHeight}
+            >
+                <div className="menu">
+                    <DropDownItem goToMenu="main" leftIcon={<ArrowIcon />}>
+                        <h2>Go Back</h2>
+                    </DropDownItem>
+
+                    {/* Default Deck */}
+                    <DropDownItem deckName={'First'} action={props.updateDeck}><h2>First</h2></DropDownItem>
+
+                    {/* Put decks from db here */}
+                    {decks.map(deck => (
+                        <DropDownItem deckName={deck.deck_name} key={deck._id} action={props.updateDeck}><h2>{deck.deck_name}</h2></DropDownItem>
+                    ))}
+                    <DropDownItem leftIcon={<PlusIcon />}>
+                        <InputItem>Create new Deck</InputItem>
+                    </DropDownItem>
+                </div>
+            </CSSTransition>
+
         </div>
     )
 }
