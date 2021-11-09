@@ -26,19 +26,17 @@ const App = () => {
     const [langCode, setLangCode] = useState('ja')
     const [decks, setDecks] = useState([])
 
-
-    const langTable = {
-        'ja': '日本語',
-        'ko': '한국어',
-        'it': 'Italiano',
-        'fr': 'Français',
-        'es': 'Español',
-        'de': 'Deutsch',
-        'ar': 'العربية'
-    }
-
     // Whenver langcode is updated; update language(human readable)
     useEffect(() => {
+        const langTable = {
+            'ja': '日本語',
+            'ko': '한국어',
+            'it': 'Italiano',
+            'fr': 'Français',
+            'es': 'Español',
+            'de': 'Deutsch',
+            'ar': 'العربية'
+        }
         let l = langTable[langCode];
         setLanguage(l);
     }, [langCode])

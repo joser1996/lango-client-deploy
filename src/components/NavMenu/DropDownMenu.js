@@ -1,10 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react'
-import { FaBalanceScale } from 'react-icons/fa';
 import { CSSTransition } from "react-transition-group";
 import evalBool from '../../global';
 import {ReactComponent as ArrowIcon} from '../../icons/arrow.svg'
 import {ReactComponent as PlusIcon} from '../../icons/plus.svg'
-import {ReactComponent as TrashIcon} from '../../icons/trash.svg'
 
 
 export default function DropDownMenu(props) {
@@ -62,7 +60,7 @@ export default function DropDownMenu(props) {
                     if (evalBool(process.env.REACT_APP_DEV_MODE)) {
                         endPoint = "http://localhost:4000"
                     }
-                    let url = endPoint + '/create/deck' + `?deck=${name}`
+                    let url = `${endPoint}/create/deck?deck=${name}`
                     fetch(url, {credentials: 'include'})
                     .then(res => res.json())
                     .then(data => {
