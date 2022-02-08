@@ -11,6 +11,7 @@ import SubmitButton from '../SubmitButton/SubmitButton';
 export default function EditBody(props) {
     const [words, setWords] = useState(getSavedWords() || []);
     const deckName = props.deck;
+    const langCode = props.code || 'en'
 
     const addBufferedWord = (word, translated) => {
         const newWord = {
@@ -30,11 +31,11 @@ export default function EditBody(props) {
         let buffer = localStorage.getItem('words');
         let localCards = JSON.parse(buffer) || [];
         return localCards;
-    };
+    }; 
 
     const updateTranslatedWord = (word, id) => {
         const sourceLanguage = 'english';
-        const api = `?${sourceLanguage}=${word}`
+        const api = `?${sourceLanguage}=${word}&code=${langCode}`
         var endPoint = process.env.REACT_APP_HOST;
         if (evalBool(process.env.REACT_APP_DEV_MODE)) {
             endPoint = "http://localhost:4000"
