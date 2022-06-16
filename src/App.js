@@ -4,15 +4,9 @@ import LoginPage from "./pages/LoginPage"
 import "./App.css"
 import "./index.css"
 import evalBool from "./global";
-import NavBar from "./components/NavMenu/NavBar";
-import NavItem from "./components/NavMenu/NavItem";
-import DropDownMenu from "./components/NavMenu/DropDownMenu";
+import Navbar from "./components/Navbar";
 import EditBody from "./components/EditBody/EditBody";
 
-import { ReactComponent as BoltIcon } from "./icons/bolt.svg"
-import { ReactComponent as ArrowIcon } from "./icons/arrow.svg"
-import { ReactComponent as CaretIcon } from "./icons/caret.svg"
-import { ReactComponent as PlusIcon } from "./icons/plus.svg"
 import ReviewBody from "./components/ReviewBody";
 
 const App = () => {
@@ -124,14 +118,7 @@ const App = () => {
                 <Switch>
                     <Route path='/login' exact component={LoginPage} />
                     <Route path='/' exact>
-                        <NavBar deck={deckName}>
-                            {/* Review Button */}
-                            <NavItem icon={reviewing ? <PlusIcon /> : <BoltIcon />} desc={"Start Reviewing/Edit"} drop={false} action={updateReviewing}/>
-                            <NavItem icon={<ArrowIcon />} desc={"Logout"} drop={false} action={logout}/>
-                            <NavItem icon={<CaretIcon />} desc={"DropDown Menu"} drop={true}>
-                                <DropDownMenu updateLanguage={updateLanguage} decks={decks} updateDeck={updateDeckName}/>
-                            </NavItem>
-                        </NavBar>
+                        <Navbar />
                         {user ? (reviewing ? <ReviewBody deck={deckName}/> : <EditBody language={language} code={langCode} deck={deckName}/>) : <Redirect to="/login" /> }
                     </Route>
                 </Switch>
